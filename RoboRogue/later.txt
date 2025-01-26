@@ -1,0 +1,91 @@
+It probably doesn't make sense to make a ton of classes in seperate files and then include them all into a main file when I can make them all in one. 
+Otherwise I could do a chain of includes where the next always includes the previous, but I don't want circular includes. I'm sure there are other ways to do this too.
+
+
+GPT:
+In java, files can somehow read other files in the same folder, allowing me to call classes from a main file. In C++, however, includes is used to do this.
+This can cause a problem when I want two classes in separate files to be able to change variables in each other, while also should be called by a main file. 
+Using includes here creates circular dependency, how should I go about solving this?
+
+
+
+To solve this problem, you can use forward declarations and pointers or references to break the circular dependency. Here's the general approach:
+
+1. Use Forward Declarations
+A forward declaration tells the compiler that a class exists, but it doesn't need the full definition at the point of declaration. This allows you to reference each other’s class without the need to fully include each class in the header file.
+
+For example, suppose you have two classes, ClassA and ClassB, which need to reference each other’s members.
+
+_____________________________________________
+ClassA.h
+
+// Forward declaration
+class ClassB;
+
+class ClassA {
+public:
+    void setClassB(ClassB* b);
+    void doSomethingWithClassB();
+private:
+    ClassB* b_; // Pointer to ClassB
+};
+
+_____________________________________________
+ClassB.h
+
+// Forward declaration
+class ClassA;
+
+class ClassB {
+public:
+    void setClassA(ClassA* a);
+    void doSomethingWithClassA();
+private:
+    ClassA* a_; // Pointer to ClassA
+};
+
+
+_____________________________________________
+
+
+2. Define Your Classes in .cpp Files
+In the corresponding .cpp files, you can include the full header files for both classes now that the compiler knows the types exist due to forward declarations.
+
+_____________________________________________
+ClassA.cpp
+
+#include "ClassA.h"
+#include "ClassB.h"
+
+void ClassA::setClassB(ClassB* b) {
+    b_ = b;
+}
+
+void ClassA::doSomethingWithClassB() {
+    // Access ClassB methods through b_
+}
+
+
+_____________________________________________
+ClassB.cpp
+
+#include "ClassB.h"
+#include "ClassA.h"
+
+void ClassB::setClassA(ClassA* a) {
+    a_ = a;
+}
+
+void ClassB::doSomethingWithClassA() {
+    // Access ClassA methods through a_
+}
+
+_____________________________________________
+
+Explanation
+1.   Forward Declarations: You declare that ClassA and ClassB exist but don't define them fully in the header files. 
+This removes the need for one class to include the other’s header file, which prevents the circular dependency.
+2.   Pointers/References: Instead of including full definitions, you store pointers or references to the other class. 
+This way, you only need a declaration of the class type, not the full class definition.
+3.   Actual Inclusion in .cpp Files: 
+The complete class definitions are needed in the .cpp files to implement the methods, so that's where you include the full headers.
