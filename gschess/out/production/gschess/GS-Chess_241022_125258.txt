@@ -1,0 +1,73 @@
+Grand Strategy Chess.
+
+Goal: a simple grand strategy game that just uses existing chess pieces in unique ways with more ground and more focus trees. 
+
+2 player or 4 player (don't worry about AI until very end (or not at all).
+
+Start:
+1. Chess pieces have normal movement and you start with normal setup
+2. move 4 pieces per turn
+3. Kill all enemy kings to win
+
+2pl Board: 32 x 48
+4pl: ???
+- no obstacles unless extra mode
+
+Extra Rules: (limit bc chess)
+- king can produce pieces at any square around it. Takes certain turn #. 
+pawn: 1
+bishop: 3
+rook: 3
+knight: 4
+queen: 6
+king: 7
+- if no avail square, just stays queued until next turn
+- production does not count as a move
+- that's it :)
+
+Focus trees:
+- modes for same & different 
+- different just has an extra branch for each.
+- Each focus takes a certain number of turns
+
+Paths:
+
+<1,000 Eyes>
++4 pawns
+<Night Crawler> | <Holy Wars>
++1 Knights or +2 bishops
+<Crazy Train> 
++2 rooks
+<Schism> | <The Four Horsemen>
++4 bishops   or  +4 knights
+
+<Production>
+make king now 6 turns
+<B>  & <K>  & <R>
+all -1 for associated piece (pick 2)
+<Polygamy>   |   <Duopoly>
+free queen OR free king (mut. excl)
+<B>  |  <K>  |  <R>
+-1 for associated pieces  (m.e.)
+<Triumverate> | <Q> 
+free king or queen to 5
+<Royal Industry>
+king to 6
+
+<Advance>
+Pawn first move forward twice
+<Shining Armor>
+Knights can double move on spawn
+<Quick Deployment> | <Pawn Offensive> | <Mass Deployment>
+ +1 move for any piece on any spawn, / Pawns can now attack in front, / option for 4 pawns in 3 turns
+<Fast Pawns>
+Pawns can now move 2 squares ahead at a time
+
+☆ balance it a with time[num turns] per upgrade
+
+Commentary:
+- kings can move and spawn to encourage supplying from dif angles. Act more as supply hubs than rulers.
+- pawns can still change to any piece at board end :)
+
+IMPLEMENTATION: don't worry about it until/ unless you restart the project with better tools and knowledge.
+- but would check if bishop move possible by abs(x - new x) == abs (y - new y);, then check conflicts
