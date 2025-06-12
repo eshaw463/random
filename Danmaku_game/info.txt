@@ -1,0 +1,3 @@
+ik why the game broke now. I tried to initialize it in/from the start block and not from the chain of the other events. 
+The entire start block is loaded before any game update events are called.
+Would need to trigger each stage in a way that doesn't interfere with game updates. 
