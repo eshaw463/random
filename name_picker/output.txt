@@ -1,0 +1,6 @@
+aaa  -  5
+bbb  -  5
+ccc  -  5
+ddd  -  5
+eee  -  5
+fff  -  5
